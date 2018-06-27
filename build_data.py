@@ -1,7 +1,7 @@
 from model.config import Config
 from model.data_utils import CoNLLDataset, get_vocabs, UNK, NUM, \
     get_glove_vocab, write_vocab, load_vocab, get_char_vocab, \
-    export_trimmed_glove_vectors, get_processing_word
+    export_trimmed_glove_vectors, get_processing_word, word2vec
 
 
 def main():
@@ -23,6 +23,7 @@ def main():
     config = Config(load=False)
     processing_word = get_processing_word(lowercase=True)
 
+    word2vec_model=word2vec(model_path=config.word2vec_path)
     # Generators
     dev   = CoNLLDataset(config.filename_dev, processing_word)
     test  = CoNLLDataset(config.filename_test, processing_word)
@@ -30,9 +31,9 @@ def main():
 
     # Build Word and Tag vocab
     vocab_words, vocab_tags = get_vocabs([train, dev, test])
-    vocab_glove = get_glove_vocab(config.filename_glove)
+    vocab_word2vec = set(word2vec_model.vocab)
 
-    vocab = vocab_words & vocab_glove
+    vocab = vocab_words & vocab_word2vec
     vocab.add(UNK)
     vocab.add(NUM)
 

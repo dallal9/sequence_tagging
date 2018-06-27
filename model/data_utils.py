@@ -1,6 +1,6 @@
 import numpy as np
 import os
-
+import gensim
 
 # shared global variables to be imported from model also
 UNK = "$UNK$"
@@ -21,6 +21,12 @@ trimm your word vectors.
 """.format(filename)
         super(MyIOError, self).__init__(message)
 
+class word2vec(object):
+    def __init__(self,model_path,binary=True):
+        model = gensim.models.KeyedVectors.load_word2vec_format(model_path, binary=binary)
+        print("Successfully loaded word2vec file!")
+        self.word_vectors = model.wv
+        self.vocab= list((dict(self.word_vectors.vocab).keys()))
 
 class CoNLLDataset(object):
     """Class that iterates over CoNLL Dataset

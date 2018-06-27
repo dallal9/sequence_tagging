@@ -39,6 +39,7 @@ class Config():
         self.vocab_words = load_vocab(self.filename_words)
         self.vocab_tags  = load_vocab(self.filename_tags)
         self.vocab_chars = load_vocab(self.filename_chars)
+        
 
         self.nwords     = len(self.vocab_words)
         self.nchars     = len(self.vocab_chars)
@@ -102,3 +103,5 @@ class Config():
     # NOTE: if both chars and crf, only 1.6x slower on GPU
     use_crf = True # if crf, training is 1.7x slower on CPU
     use_chars = True # if char embedding, training is 3.5x slower on CPU
+
+    word2vec_path = "data/GoogleNews-vectors-negative300.bin"
